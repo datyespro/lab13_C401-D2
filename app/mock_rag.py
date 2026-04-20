@@ -13,9 +13,9 @@ CORPUS = {
 
 def retrieve(message: str) -> list[str]:
     if STATE["tool_fail"]:
-        raise RuntimeError("Vector store timeout")
+        raise RuntimeError("Vector store timeout — tool_fail incident active")
     if STATE["rag_slow"]:
-        time.sleep(2.5)
+        time.sleep(3.0)   # 3s > SLO 2000ms → guaranteed breach visible on dashboard
     lowered = message.lower()
     for key, docs in CORPUS.items():
         if key in lowered:
