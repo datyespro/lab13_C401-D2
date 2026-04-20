@@ -3,19 +3,17 @@ from __future__ import annotations
 import hashlib
 import re
 
-PII_PATTERNS: dict[str, str] = {
-    "email": r"[\w\.-]+@[\w\.-]+\.\w+",
-    "phone_vn": r"(?:\+84|0)[ \.-]?\d{3}[ \.-]?\d{3}[ \.-]?\d{3,4}", # Matches 090 123 4567, 090.123.4567, etc.
-    "cccd": r"\b\d{12}\b",
-    "credit_card": r"\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\b",
-    # TODO: Add more patterns (e.g., Passport, Vietnamese address keywords)
-}
+PII_RULES: list[tuple[re.Pattern[str], str]] = [
+    (re.compile(r"\b4\d{3}(?:[ -]?\d{4}){3}\b"), "[REDACTED_CC]"),
+    (re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"), "[REDACTED_EMAIL]"),
+    (re.compile(r"(?<!\d)(?:\+84|0)(?:[ .-]?\d){9,10}(?!\d)"), "[REDACTED_PHONE]"),
+]
 
 
 def scrub_text(text: str) -> str:
     safe = text
-    for name, pattern in PII_PATTERNS.items():
-        safe = re.sub(pattern, f"[REDACTED_{name.upper()}]", safe)
+    for pattern, replacement in PII_RULES:
+        safe = pattern.sub(replacement, safe)
     return safe
 
 
