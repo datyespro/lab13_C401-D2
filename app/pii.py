@@ -3,17 +3,26 @@ from __future__ import annotations
 import hashlib
 import re
 
-PII_RULES: list[tuple[re.Pattern[str], str]] = [
-    (re.compile(r"\b4\d{3}(?:[ -]?\d{4}){3}\b"), "[REDACTED_CC]"),
-    (re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"), "[REDACTED_EMAIL]"),
-    (re.compile(r"(?<!\d)(?:\+84|0)(?:[ .-]?\d){9,10}(?!\d)"), "[REDACTED_PHONE]"),
-]
+PII_PATTERNS: dict[str, str] = {
+    # Financial & Card Data
+    "cc": r"\b\d{4}[- ]?\d{4}[- ]?\d{4}[- ]?\d{4}\b",
+    # Contact Information
+    "email": r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b",
+    "phone_vn": r"(?<!\d)(?:\+84|0)(?:[ .-]?\d){9,10}(?!\d)",
+    # Vietnamese ID Documents
+    "cccd": r"\b\d{12}\b",
+    "passport_vn": r"\b[A-Z]{1,2}\d{7,8}\b",
+    # Vietnamese Address Keywords (common street patterns)
+    "address_hanoi": r"(?:Hà Nội|HN|Hoàn Kiếm|Hoan Kiem|Ba Đình|Thanh Xuân)",
+    "address_hcm": r"(?:Sài Gòn|TPHCM|TP\.HCM|Quận \d{1,2}|District)",
+    "ssn_like": r"\b\d{9}\b",  # Social security or similar 9-digit patterns
+}
 
 
 def scrub_text(text: str) -> str:
     safe = text
-    for pattern, replacement in PII_RULES:
-        safe = pattern.sub(replacement, safe)
+    for name, pattern in PII_PATTERNS.items():
+        safe = re.sub(pattern, f"[REDACTED_{name.upper()}]", safe)
     return safe
 
 
