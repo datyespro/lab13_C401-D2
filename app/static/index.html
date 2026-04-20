@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VinUni IT Helpdesk – Observability Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <nav class="topbar">
+        <div class="topbar-left">
+            <div class="logo-group">
+                <div class="logo-badge">VU</div>
+                <div class="logo-text">
+                    <span class="logo-title">VinUni IT Helpdesk</span>
+                    <span class="logo-sub">Observability Dashboard</span>
+                </div>
+            </div>
+        </div>
+        <div class="topbar-center">
+            <div class="time-range-badge">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                Last 1 hour · Auto-refresh 3s
+            </div>
+        </div>
+        <div class="topbar-right">
+            <div id="incident-badge" class="incident-badge normal">
+                <span class="incident-dot"></span>
+                <span id="incident-text">All Systems Normal</span>
+            </div>
+            <div class="refresh-time">Updated: <span id="last-updated">--:--:--</span></div>
+        </div>
+    </nav>
+
+    <main class="dashboard">
+        <!-- SLO Summary Bar -->
+        <section class="slo-bar">
+            <div class="slo-item">
+                <span class="slo-label">Latency P95 SLO</span>
+                <span class="slo-target">Target ≤ 2000ms</span>
+                <div class="slo-progress-track">
+                    <div id="slo-latency-bar" class="slo-progress-fill" style="width:0%"></div>
+                </div>
+                <span id="slo-latency-pct" class="slo-pct">100%</span>
+            </div>
+            <div class="slo-divider"></div>
+            <div class="slo-item">
+                <span class="slo-label">Error Rate SLO</span>
+                <span class="slo-target">Target ≤ 2%</span>
+                <div class="slo-progress-track">
+                    <div id="slo-error-bar" class="slo-progress-fill" style="width:100%"></div>
+                </div>
+                <span id="slo-error-pct" class="slo-pct">100%</span>
+            </div>
+            <div class="slo-divider"></div>
+            <div class="slo-item">
+                <span class="slo-label">Quality SLO</span>
+                <span class="slo-target">Target ≥ 0.80</span>
+                <div class="slo-progress-track">
+                    <div id="slo-quality-bar" class="slo-progress-fill" style="width:0%"></div>
+                </div>
+                <span id="slo-quality-pct" class="slo-pct">--</span>
+            </div>
+        </section>
+
+        <!-- KPI Row -->
+        <section class="kpi-row">
+            <div class="kpi-card" id="kpi-traffic">
+                <div class="kpi-icon traffic-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <div class="kpi-body">
+                    <span class="kpi-label">Total Requests</span>
+                    <span class="kpi-value" id="val-traffic">0</span>
+                    <span class="kpi-trend" id="trend-traffic">—</span>
+                </div>
+            </div>
+            <div class="kpi-card" id="kpi-p95">
+                <div class="kpi-icon latency-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="kpi-body">
+                    <span class="kpi-label">Latency P95</span>
+                    <span class="kpi-value" id="val-p95">0<small>ms</small></span>
+                    <span class="kpi-trend" id="slo-p95-badge">SLO OK</span>
+                </div>
+            </div>
+            <div class="kpi-card" id="kpi-error">
+                <div class="kpi-icon error-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                </div>
+                <div class="kpi-body">
+                    <span class="kpi-label">Error Rate</span>
+                    <span class="kpi-value" id="val-error-rate">0.0<small>%</small></span>
+                    <span class="kpi-trend" id="val-error-count">0 errors</span>
+                </div>
+            </div>
+            <div class="kpi-card" id="kpi-cost">
+                <div class="kpi-icon cost-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                </div>
+                <div class="kpi-body">
+                    <span class="kpi-label">Total Cost</span>
+                    <span class="kpi-value" id="val-cost-total">$0.0000</span>
+                    <span class="kpi-trend">Avg: <span id="val-cost-avg">$0.00</span>/req</span>
+                </div>
+            </div>
+            <div class="kpi-card" id="kpi-quality">
+                <div class="kpi-icon quality-icon">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                </div>
+                <div class="kpi-body">
+                    <span class="kpi-label">Quality Score</span>
+                    <span class="kpi-value" id="val-quality">0.00</span>
+                    <span class="kpi-trend">Target ≥ 0.80</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Chart Grid -->
+        <section class="chart-grid">
+            <!-- Panel 1: Latency Chart -->
+            <div class="chart-card span-2">
+                <div class="chart-header">
+                    <div>
+                        <h3>Latency Distribution Over Time</h3>
+                        <p class="chart-sub">P50 / P95 / P99 (ms) — SLO threshold at 2000ms</p>
+                    </div>
+                    <div class="latency-pills">
+                        <span class="pill p50">P50: <span id="badge-p50">0</span>ms</span>
+                        <span class="pill p95">P95: <span id="badge-p95">0</span>ms</span>
+                        <span class="pill p99">P99: <span id="badge-p99">0</span>ms</span>
+                    </div>
+                </div>
+                <div class="chart-body">
+                    <canvas id="latencyChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Panel 2: Traffic / QPS -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <h3>Request Traffic</h3>
+                        <p class="chart-sub">Cumulative request count</p>
+                    </div>
+                </div>
+                <div class="chart-body">
+                    <canvas id="trafficChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Panel 3: Error Rate Breakdown -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <h3>Error Rate %</h3>
+                        <p class="chart-sub">SLO threshold at 2%</p>
+                    </div>
+                </div>
+                <div class="chart-body">
+                    <canvas id="errorChart"></canvas>
+                </div>
+                <div class="error-breakdown-list" id="error-breakdown">
+                    <div class="no-error-row">
+                        <span class="green-dot"></span> No errors detected
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel 4: Cost Over Time -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <h3>Cost Over Time (USD)</h3>
+                        <p class="chart-sub">Cumulative spend · Daily budget $1.00</p>
+                    </div>
+                </div>
+                <div class="chart-body">
+                    <canvas id="costChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Panel 5: Token Usage -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <h3>Token Usage</h3>
+                        <p class="chart-sub">Prompt tokens in vs. completion tokens out</p>
+                    </div>
+                    <div class="token-totals">
+                        <span>In: <b id="total-tokens-in">0</b></span>
+                        <span>Out: <b id="total-tokens-out">0</b></span>
+                    </div>
+                </div>
+                <div class="chart-body">
+                    <canvas id="tokensChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Panel 6: Quality Score -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <div>
+                        <h3>Quality Score Avg</h3>
+                        <p class="chart-sub">Heuristic proxy · Target ≥ 0.80</p>
+                    </div>
+                </div>
+                <div class="quality-gauge-wrap">
+                    <div class="gauge-container">
+                        <canvas id="qualityGauge"></canvas>
+                        <div class="gauge-center-text">
+                            <span id="gauge-score">0.00</span>
+                            <small>/ 1.00</small>
+                        </div>
+                    </div>
+                    <div class="quality-legend">
+                        <div class="ql-item"><span class="ql-dot poor"></span>Poor &lt;0.6</div>
+                        <div class="ql-item"><span class="ql-dot fair"></span>Fair 0.6–0.8</div>
+                        <div class="ql-item"><span class="ql-dot good"></span>Good ≥0.8</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

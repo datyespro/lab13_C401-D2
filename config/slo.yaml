@@ -1,16 +1,16 @@
-service: day13-observability-lab
+service: it-helpdesk-agent
 window: 28d
 slis:
   latency_p95_ms:
-    objective: 3000
-    target: 99.5
-    note: Replace with your group's target
+    objective: 2000
+    target: 95.0
+    note: Target P95 at 2 seconds for RAG and LLM tool calls
   error_rate_pct:
     objective: 2
     target: 99.0
   daily_cost_usd:
-    objective: 2.5
+    objective: 1.0
     target: 100.0
   quality_score_avg:
-    objective: 0.75
+    objective: 0.8
     target: 95.0
