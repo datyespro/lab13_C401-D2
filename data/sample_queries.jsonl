@@ -8,23 +8,13 @@
 {"user_id":"u08","session_id":"s08","feature":"qa","message":"How do I debug tail latency?"}
 {"user_id":"u09","session_id":"s09","feature":"qa","message":"What is the policy for PII and credit card 4111 1111 1111 1111?"}
 {"user_id":"u10","session_id":"s10","feature":"qa","message":"How should alerts be designed?"}
-{"user_id":"u11","session_id":"s11","feature":"qa","message":"My student ID is SV2024001, I cannot access the VPN. Please help."}
-{"user_id":"u12","session_id":"s12","feature":"summary","message":"Summarize the IT support escalation policy for hardware failures"}
-{"user_id":"u13","session_id":"s13","feature":"qa","message":"How do I reset my VinUni email password? Contact me at 0912345678"}
-{"user_id":"u14","session_id":"s14","feature":"qa","message":"What is the SLA for network outage incidents at VinUni?"}
-{"user_id":"u15","session_id":"s15","feature":"qa","message":"Explain data retention policy for student records"}
-{"user_id":"u16","session_id":"s16","feature":"summary","message":"Summarize refund policy for international students who withdraw early"}
-{"user_id":"u17","session_id":"s17","feature":"qa","message":"Can I pay tuition via Visa card ending 4111 1111 1111 1111?"}
-{"user_id":"u18","session_id":"s18","feature":"qa","message":"How do I report a phishing email to IT security?"}
-{"user_id":"u19","session_id":"s19","feature":"qa","message":"What monitoring tools does VinUni IT use for infrastructure?"}
-{"user_id":"u20","session_id":"s20","feature":"summary","message":"Summarize acceptable use policy for campus Wi-Fi"}
-{"user_id":"u21","session_id":"s21","feature":"qa","message":"My laptop was stolen, who should I contact? My phone is 0908123456"}
-{"user_id":"u22","session_id":"s22","feature":"qa","message":"What is the policy on logging personally identifiable information?"}
-{"user_id":"u23","session_id":"s23","feature":"qa","message":"How long does IT take to respond to a P1 incident?"}
-{"user_id":"u24","session_id":"s24","feature":"summary","message":"Summarize the two-factor authentication policy for VinUni systems"}
-{"user_id":"u25","session_id":"s25","feature":"qa","message":"Send the invoice to finance@vinuni.edu.vn for the refund request"}
-{"user_id":"u26","session_id":"s26","feature":"qa","message":"How do structured logs differ from unstructured logs?"}
-{"user_id":"u27","session_id":"s27","feature":"qa","message":"What should I do when the campus printing system is down?"}
-{"user_id":"u28","session_id":"s28","feature":"summary","message":"Explain how tracing helps isolate which microservice caused a latency spike"}
-{"user_id":"u29","session_id":"s29","feature":"qa","message":"Is BYOD allowed on the VinUni internal network?"}
-{"user_id":"u30","session_id":"s30","feature":"qa","message":"What are the consequences of violating the data security policy?"}
+{"user_id":"u11","session_id":"s11","feature":"qa","message":"I need to reset my VinUni password, my phone number is 0912345678."}
+{"user_id":"u12","session_id":"s12","feature":"qa","message":"Can I get a refund if I used card 4222 2222 2222 2222?"}
+{"user_id":"u13","session_id":"s13","feature":"qa","message":"My email is hello@vinuni.edu.vn, why can't I access the library portal?"}
+{"user_id":"u14","session_id":"s14","feature":"summary","message":"Summarize the refund policy for students"}
+{"user_id":"u15","session_id":"s15","feature":"qa","message":"Who do I contact for IT support? Can I call 0988888888?"}
+{"user_id":"u16","session_id":"s16","feature":"qa","message":"I paid tuition using Visa 4111222233334444, when will the refund arrive?"}
+{"user_id":"u17","session_id":"s17","feature":"qa","message":"What is the university's data retention policy for emails like admin@vinuni.edu.vn?"}
+{"user_id":"u18","session_id":"s18","feature":"summary","message":"Summarize the guidelines on handling student PII data"}
+{"user_id":"u19","session_id":"s19","feature":"qa","message":"My laptop won't connect to campus wifi, call me at 0901112233"}
+{"user_id":"u20","session_id":"s20","feature":"qa","message":"Where do I submit my refund request form?"}
