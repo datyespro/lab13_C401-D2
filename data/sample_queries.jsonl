@@ -1,20 +1,20 @@
-{"user_id":"u11","session_id":"s11","feature":"qa","message":"Please summarize our refund policy. Contact: user(at)example.com"}
-{"user_id":"u12","session_id":"s12","feature":"qa","message":"My phone is 09xx-xxx-xxx. What data should be logged?"}
-
-{"user_id":"u13","session_id":"s13","feature":"qa","message":"Test input with SQL-like pattern: SELECT * FROM users WHERE id='1' -- should be treated as plain text"}
-{"user_id":"u14","session_id":"s14","feature":"qa","message":"Template-looking text: {{7*7}} should not be evaluated, only logged safely"}
-
-{"user_id":"u15","session_id":"s15","feature":"qa","message":"New line test -> first line\nsecond line\nthird line"}
-{"user_id":"u16","session_id":"s16","feature":"qa","message":"Log format mimic: [INFO] 2026-01-01 user=admin action=login (should not break log parser)"}
-
-{"user_id":"u17","session_id":"s17","feature":"summary","message":"Unicode test: café, tiếng Việt, 中文, emojis 😊🚀"}
-{"user_id":"u18","session_id":"s18","feature":"qa","message":"Very long input "}
-
-{"user_id":"u19","session_id":"s19","feature":"qa","message":"JSON inside text: {\"key\":\"value\",\"nested\":{\"a\":1}}"}
-{"user_id":"u20","session_id":"s20","feature":"qa","message":"URL test: https://example.com/path?param=value&token=abc123 (token should be masked)"}
-
-{"user_id":"u21","session_id":"s21","feature":"qa","message":"Edge whitespace     with    irregular spacing"}
-{"user_id":"u22","session_id":"s22","feature":"qa","message":"Case variation: PASSWORD, Password, password should be normalized if needed"}
-
-{"user_id":"u23","session_id":"s23","feature":"summary","message":"Summarize observability policy focusing on logs, metrics, traces"}
-{"user_id":"u24","session_id":"s24","feature":"qa","message":"How should alerts be designed for high latency spikes?"}
+{"user_id":"u01","session_id":"s01","feature":"qa","message":"What is your refund policy? My email is student@vinuni.edu.vn"}
+{"user_id":"u02","session_id":"s02","feature":"qa","message":"Explain why metrics traces and logs work together"}
+{"user_id":"u03","session_id":"s03","feature":"summary","message":"Summarize the monitoring policy for production logging"}
+{"user_id":"u04","session_id":"s04","feature":"qa","message":"Can I get help with policy and monitoring?"}
+{"user_id":"u05","session_id":"s05","feature":"qa","message":"Here is my phone 0987654321, what should be logged?"}
+{"user_id":"u06","session_id":"s06","feature":"summary","message":"Give me a short summary of the observability workflow"}
+{"user_id":"u07","session_id":"s07","feature":"qa","message":"What should not appear in app logs?"}
+{"user_id":"u08","session_id":"s08","feature":"qa","message":"How do I debug tail latency?"}
+{"user_id":"u09","session_id":"s09","feature":"qa","message":"What is the policy for PII and credit card 4111 1111 1111 1111?"}
+{"user_id":"u10","session_id":"s10","feature":"qa","message":"How should alerts be designed?"}
+{"user_id":"u11","session_id":"s11","feature":"qa","message":"I need to reset my VinUni password, my phone number is 0912345678."}
+{"user_id":"u12","session_id":"s12","feature":"qa","message":"Can I get a refund if I used card 4222 2222 2222 2222?"}
+{"user_id":"u13","session_id":"s13","feature":"qa","message":"My email is hello@vinuni.edu.vn, why can't I access the library portal?"}
+{"user_id":"u14","session_id":"s14","feature":"summary","message":"Summarize the refund policy for students"}
+{"user_id":"u15","session_id":"s15","feature":"qa","message":"Who do I contact for IT support? Can I call 0988888888?"}
+{"user_id":"u16","session_id":"s16","feature":"qa","message":"I paid tuition using Visa 4111222233334444, when will the refund arrive?"}
+{"user_id":"u17","session_id":"s17","feature":"qa","message":"What is the university's data retention policy for emails like admin@vinuni.edu.vn?"}
+{"user_id":"u18","session_id":"s18","feature":"summary","message":"Summarize the guidelines on handling student PII data"}
+{"user_id":"u19","session_id":"s19","feature":"qa","message":"My laptop won't connect to campus wifi, call me at 0901112233"}
+{"user_id":"u20","session_id":"s20","feature":"qa","message":"Where do I submit my refund request form?"}
