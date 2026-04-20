@@ -10,7 +10,7 @@ from structlog.contextvars import bind_contextvars
 from .agent import LabAgent
 from .incidents import disable, enable, status
 from .logging_config import configure_logging, get_logger
-from .metrics import record_error, snapshot
+from .metrics import record_error, reset, snapshot
 from .middleware import CorrelationIdMiddleware
 from .pii import hash_user_id, summarize_text
 from .schemas import ChatRequest, ChatResponse
@@ -42,6 +42,14 @@ async def health() -> dict:
 @app.get("/metrics")
 async def metrics() -> dict:
     return snapshot()
+
+
+@app.post("/metrics/reset")
+async def metrics_reset() -> dict:
+    """Reset toàn bộ sliding-window metrics — dùng khi bắt đầu mỗi demo phase."""
+    reset()
+    log.info("metrics_reset", service="control")
+    return {"ok": True, "message": "Metrics reset to zero"}
 
 
 @app.post("/chat", response_model=ChatResponse)

@@ -1,15 +1,18 @@
 from __future__ import annotations
 
-from collections import Counter
+from collections import Counter, deque
 from statistics import mean
 
-REQUEST_LATENCIES: list[int] = []
-REQUEST_COSTS: list[float] = []
-REQUEST_TOKENS_IN: list[int] = []
-REQUEST_TOKENS_OUT: list[int] = []
+# Sliding window: chỉ giữ 100 request gần nhất để P95 phản ánh trạng thái HIỆN TẠI
+_WINDOW = 100
+
+REQUEST_LATENCIES: deque[int]   = deque(maxlen=_WINDOW)
+REQUEST_COSTS: deque[float]     = deque(maxlen=_WINDOW)
+REQUEST_TOKENS_IN: deque[int]   = deque(maxlen=_WINDOW)
+REQUEST_TOKENS_OUT: deque[int]  = deque(maxlen=_WINDOW)
 ERRORS: Counter[str] = Counter()
 TRAFFIC: int = 0
-QUALITY_SCORES: list[float] = []
+QUALITY_SCORES: deque[float]    = deque(maxlen=_WINDOW)
 
 
 def record_request(latency_ms: int, cost_usd: float, tokens_in: int, tokens_out: int, quality_score: float) -> None:
@@ -24,9 +27,19 @@ def record_request(latency_ms: int, cost_usd: float, tokens_in: int, tokens_out:
 
 
 def record_error(error_type: str) -> None:
-    global TRAFFIC
-    TRAFFIC += 1
     ERRORS[error_type] += 1
+
+
+def reset() -> None:
+    """Hard-reset toàn bộ metrics — dùng giữa các phase demo."""
+    global TRAFFIC
+    TRAFFIC = 0
+    REQUEST_LATENCIES.clear()
+    REQUEST_COSTS.clear()
+    REQUEST_TOKENS_IN.clear()
+    REQUEST_TOKENS_OUT.clear()
+    QUALITY_SCORES.clear()
+    ERRORS.clear()
 
 
 
