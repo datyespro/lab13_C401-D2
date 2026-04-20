@@ -1,19 +1,32 @@
 alerts:
   - name: high_latency_p95
     severity: P2
-    condition: latency_p95_ms > 5000 for 30m
+    condition: latency_p95 > 2000 for 1m
     type: symptom-based
     owner: team-oncall
     runbook: docs/alerts.md#1-high-latency-p95
+    description: "Cảnh báo khi độ trễ P95 vượt mức 2 giây trong 1 phút. Dấu hiệu RAG hoặc LLM phản hồi chậm."
+    
   - name: high_error_rate
     severity: P1
-    condition: error_rate_pct > 5 for 5m
+    condition: error_rate_pct > 5 for 1m
     type: symptom-based
     owner: team-oncall
     runbook: docs/alerts.md#2-high-error-rate
+    description: "Cảnh báo khẩn khi tỉ lệ lỗi (500s) vượt mức 5%. Hệ thống có thể đang bị sập."
+    
   - name: cost_budget_spike
     severity: P2
-    condition: hourly_cost_usd > 2x_baseline for 15m
+    condition: total_cost_usd > 1.0 for 5m
     type: symptom-based
     owner: finops-owner
     runbook: docs/alerts.md#3-cost-budget-spike
+    description: "Cảnh báo chi phí vượt quá giới hạn $1 trong 5 phút. Cần xem xét lại token LLM output."
+
+  - name: low_quality_score
+    severity: P3
+    condition: quality_avg < 0.7 for 5m
+    type: symptom-based
+    owner: team-oncall
+    runbook: docs/alerts.md#4-low-quality-score
+    description: "Cảnh báo chất lượng trả lời của LLM xuống dưới 70%. Cần kiểm tra lại prompt."
