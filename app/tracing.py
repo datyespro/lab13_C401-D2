@@ -23,3 +23,8 @@ except Exception:  # pragma: no cover
 
 def tracing_enabled() -> bool:
     return bool(os.getenv("LANGFUSE_PUBLIC_KEY") and os.getenv("LANGFUSE_SECRET_KEY"))
+
+
+def trace_metadata(**kwargs: Any) -> None:
+    if tracing_enabled():
+        langfuse_context.update_current_trace(**kwargs)
