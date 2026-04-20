@@ -24,6 +24,8 @@ def record_request(latency_ms: int, cost_usd: float, tokens_in: int, tokens_out:
 
 
 def record_error(error_type: str) -> None:
+    global TRAFFIC
+    TRAFFIC += 1
     ERRORS[error_type] += 1
 
 
