@@ -94,6 +94,20 @@ Nếu `middleware` hoạt động đúng, script không còn báo lỗi `missing
 
 Nếu không có key, hệ thống vẫn chạy bình thường và không ném lỗi.
 
+## Kết quả test thực tế
+- `/health` trả về status `200`.
+- Response header `/health` có:
+  - `x-request-id`: ví dụ `req-149a3f86`
+  - `x-response-time-ms`: `0`
+- `/chat` trả về status `422` với lý do schema validation, vì `feature` chỉ chấp nhận `qa` hoặc `summary`.
+- `scripts/validate_logs.py` chạy thành công với kết quả:
+  - Total log records analyzed: 139
+  - Records with missing required fields: 0
+  - Records with missing enrichment (context): 0
+  - Unique correlation IDs found: 66
+  - Potential PII leaks detected: 0
+  - Grading estimate: 100/100
+
 ## Giải thích đáp ứng nhiệm vụ
 
 ### Yêu cầu nhóm
